@@ -83,15 +83,15 @@ export default function Home() {
 
           {/* ── center: heading + CTAs ── */}
           <div className="flex flex-col justify-center px-6 py-10 sm:px-8 sm:ml-24">
-            <p className="animate-fade-up mb-5 font-mono text-[0.72rem] font-bold uppercase tracking-[0.24em] text-accent">
+            <p className="animate-fade-up mb-5 font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-accent">
               Цахим дээрэлхэлтийн эсрэг хамтдаа
             </p>
-            <h1 className="animate-fade-up font-display max-w-3xl text-2xl font-medium italic leading-[1.1] tracking-[-0.01em] text-slate-900 [animation-delay:0.1s] sm:text-4xl lg:text-5xl">
+            <h1 className="animate-fade-up font-display max-w-3xl text-2xl font-medium italic leading-[1.15] tracking-[-0.01em] text-slate-900 [animation-delay:0.1s] sm:text-4xl lg:text-5xl">
               Цахим орчны дээрэлхэлтээс
               <br />
               <span className="text-accent">урьдчилан сэргийлцгээе</span>
             </h1>
-            <p className="animate-fade-up mt-5 max-w-xl text-sm leading-6 text-slate-600 [animation-delay:0.2s] sm:text-base">
+            <p className="animate-fade-up mt-5 max-w-xl text-xs leading-5 text-slate-600 [animation-delay:0.2s] sm:text-sm">
               Хүүхэд бүр цахим орчинд аюулгүй, хүндлэлтэй байх эрхтэй. Нэргүй судалгаа
               өгч, өөрийн нөхцөлийг бусадтай харьцуулан ойлгож, дараагийн алхмаа мэд.
             </p>
@@ -99,7 +99,7 @@ export default function Home() {
             <div className="animate-fade-up mt-9 flex flex-col gap-3 font-mono [animation-delay:0.3s] sm:flex-row">
               <Link
                 href="/assessment"
-                className="group grid h-12 grid-cols-[1fr_3rem] overflow-hidden bg-accent text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white"
+                className="group grid h-12 grid-cols-[1fr_3rem] overflow-hidden bg-accent text-[0.62rem] font-bold uppercase tracking-[0.12em] text-white"
               >
                 <span className="flex items-center px-5">Судалгаа өгөх</span>
                 <span className="grid place-items-center bg-slate-900 text-white transition group-hover:bg-black">
@@ -108,7 +108,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/dashboard"
-                className="group grid h-12 grid-cols-[1fr_3rem] overflow-hidden border border-slate-300 bg-white text-[0.72rem] font-bold uppercase tracking-[0.12em] text-slate-900"
+                className="group grid h-12 grid-cols-[1fr_3rem] overflow-hidden border border-slate-300 bg-white text-[0.62rem] font-bold uppercase tracking-[0.12em] text-slate-900"
               >
                 <span className="flex items-center px-5">Дата харах</span>
                 <span className="grid place-items-center bg-accent text-white transition group-hover:bg-accent-bright">
