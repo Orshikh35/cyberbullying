@@ -121,11 +121,11 @@ export function RiskResultCard({ result, onRestart }: { result: AnalysisResult; 
         </div>
       </Card>
 
-      {/* Өртсөн бүүллидэлтийн төрөл / тайлбар */}
+      {/* Өртсөн дээрэлхэлтийн төрөл / тайлбар */}
       <Card className="p-6">
         <p className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.2em] text-accent">Бүүллидэлтийн төрөл</p>
         <h3 className="mt-2 text-xl font-black text-slate-900">
-          {result.reportedTypes.length > 0 ? "Чиний хариултаас илэрсэн төрлүүд" : "Цахим бүүллидэлт ийм хэлбэрээр илэрдэг"}
+          {result.reportedTypes.length > 0 ? "Чиний хариултаас илэрсэн төрлүүд" : "Цахим дээрэлхэлт ийм хэлбэрээр илэрдэг"}
         </h3>
         <p className="mt-1 text-sm text-slate-600">
           {result.reportedTypes.length > 0

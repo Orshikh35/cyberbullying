@@ -67,11 +67,11 @@ export default function InfoPage() {
   return (
     <PageShell
       eyebrow="Мэдээ, мэдээлэл"
-      title="Цахим бүүллидэлтийг ойлгох нь хамгаалалтын эхлэл"
-      description="Цахим бүүллидэлтийн төрлүүд болон сүүлийн үеийн зөвлөмж, нийтлэлүүдийг нэг дор хүүхдэд ойлгомжтой, айдас төрүүлэхгүй хэлээр хүргэнэ."
+      title="Цахим дээрэлхэлтийг ойлгох нь хамгаалалтын эхлэл"
+      description="Цахим дээрэлхэлтийн төрлүүд болон сүүлийн үеийн зөвлөмж, нийтлэлүүдийг нэг дор хүүхдэд ойлгомжтой, айдас төрүүлэхгүй хэлээр хүргэнэ."
       icon={BookOpenText}
     >
-      <Changelog eyebrow="Төрөл" heading="Цахим бүүллидэлт ямар хэлбэрээр илэрдэг вэ?" entries={typeEntries} />
+      <Changelog eyebrow="Төрөл" heading="Цахим дээрэлхэлт ямар хэлбэрээр илэрдэг вэ?" entries={typeEntries} />
       <Changelog eyebrow="Мэдээ" heading="Сүүлийн зөвлөмж, нийтлэл" entries={newsEntries} />
     </PageShell>
   );

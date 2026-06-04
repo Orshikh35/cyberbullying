@@ -131,7 +131,7 @@ function detectImpact(values: AssessmentValues, band: AgeBand): number {
   return 1;
 }
 
-/** Хариултаас илэрсэн бүүллидэлтийн төрлүүдийн id-г буцаана. */
+/** Хариултаас илэрсэн дээрэлхэлтийн төрлүүдийн id-г буцаана. */
 function detectTypeIds(values: AssessmentValues, band: AgeBand): string[] {
   const ids = new Set<string>();
   if (band === "9-12") {

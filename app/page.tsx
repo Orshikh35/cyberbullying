@@ -84,12 +84,12 @@ export default function Home() {
           {/* ── center: heading + CTAs ── */}
           <div className="flex flex-col justify-center px-6 py-10 sm:px-8 sm:ml-24">
             <p className="animate-fade-up mb-5 font-mono text-[0.72rem] font-bold uppercase tracking-[0.24em] text-accent">
-              Цахим бүүллидэлтийн эсрэг хамтдаа
+              Цахим дээрэлхэлтийн эсрэг хамтдаа
             </p>
             <h1 className="animate-fade-up font-display max-w-3xl text-4xl font-medium italic leading-[1.05] tracking-[-0.01em] text-slate-900 [animation-delay:0.1s] sm:text-7xl lg:text-[5.5rem]">
-              Цахим орчныг
+              Цахим орчны дээрэлхэлтээс
               <br />
-              <span className="text-accent">аюулгүй болгох систем</span>
+              <span className="text-accent">урьдчилан сэргийлцгээе</span>
             </h1>
             <p className="animate-fade-up mt-6 max-w-xl text-base leading-7 text-slate-600 [animation-delay:0.2s] sm:text-lg">
               Хүүхэд бүр цахим орчинд аюулгүй, хүндлэлтэй байх эрхтэй. Нэргүй судалгаа
@@ -128,7 +128,7 @@ export default function Home() {
                 <p className="mt-3 max-w-md text-sm leading-6 text-slate-600">
                   <ScrambleText
                     delay={150}
-                    text="Хүүхэд, эцэг эх, багш нарт зориулсан энэ систем нь цахим бүүллидэлтийн эрсдэлийг айдас төрүүлэхгүйгээр ойлгуулж, тусламж авах замыг тодорхой болгоно."
+                    text="Хүүхэд, эцэг эх, багш нарт зориулсан энэ систем нь цахим дээрэлхэлтийн эрсдэлийг айдас төрүүлэхгүйгээр ойлгуулж, тусламж авах замыг тодорхой болгоно."
                   />
                 </p>
               </div>

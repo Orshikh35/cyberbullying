@@ -11,7 +11,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Цахим бүүллидэлтийн эсрэг хамтдаа",
+  title: "Цахим дээрэлхэлтийн эсрэг хамтдаа",
   description: "Хүүхдийн цахим аюулгүй байдал, үнэлгээ, зөвлөгөө, дата график.",
 };
 
