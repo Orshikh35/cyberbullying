@@ -127,7 +127,7 @@ export function AssessmentForm() {
                   ) : null}
 
                   {question.type === "checkbox" ? (
-                    <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid gap-2 sm:grid-cols-2">
                       {question.options?.map((option) => (
                         <label key={option} className="flex min-h-11 cursor-pointer items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-700 transition has-[:checked]:border-accent has-[:checked]:bg-accent/10 has-[:checked]:text-slate-900">
                           <input type="checkbox" value={option} className="accent-[#2563eb]" {...form.register(question.id)} />

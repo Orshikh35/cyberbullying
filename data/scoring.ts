@@ -32,7 +32,13 @@ export function maxRiskScore(band: AgeBand): number {
   return questionsByBand[band].reduce((sum, question) => {
     if (!question.scores) return sum;
     const values = Object.values(question.scores);
-    return sum + (values.length ? Math.max(...values) : 0);
+    if (!values.length) return sum;
+    // Олон сонголттой асуултад бүх эерэг оноог зэрэг авч болзошгүй тул
+    // дээд хязгаарыг тэдгээрийн нийлбэрээр, бусдад нь хамгийн өндрөөр нь авна.
+    if (question.type === "checkbox") {
+      return sum + values.filter((v) => v > 0).reduce((a, b) => a + b, 0);
+    }
+    return sum + Math.max(...values);
   }, 0);
 }
 
@@ -91,20 +97,20 @@ const bandRange: Partial<Record<AgeBand, [number, number]>> = {
 function detectExperienced(values: AssessmentValues, band: AgeBand): boolean {
   if (band === "9-12") {
     const hl = single(values, "harshLanguage");
-    const fh = single(values, "friendsHurt");
+    const fh = selected(values, "friendsHurt");
     const nf = single(values, "negFeelings");
     return (
       hl === "Байнга таардаг" ||
       hl === "Заримдаа таардаг" ||
-      fh.startsWith("Тийм") ||
+      fh.some((o) => o.startsWith("Тийм")) ||
       nf === "Маш их айж, түгшсэн" ||
       nf === "Уур хүрсэн, гунигласан"
     );
   }
   if (band === "13-17") {
-    const ex = single(values, "experienced");
+    const ex = selected(values, "experienced").filter((o) => o !== "Огт өртөж байгаагүй");
     const sc = single(values, "sexualContent");
-    return (ex !== "" && ex !== "Огт өртөж байгаагүй") || sc.startsWith("Тийм");
+    return ex.length > 0 || sc.startsWith("Тийм");
   }
   return single(values, "childExposed") === "Тийм, өртөж байсан";
 }
@@ -137,13 +143,13 @@ function detectTypeIds(values: AssessmentValues, band: AgeBand): string[] {
   if (band === "9-12") {
     const hl = single(values, "harshLanguage");
     if (hl === "Байнга таардаг" || hl === "Заримдаа таардаг") ids.add("insults");
-    if (single(values, "friendsHurt").startsWith("Тийм")) ids.add("excluded");
+    if (selected(values, "friendsHurt").some((o) => o.startsWith("Тийм"))) ids.add("excluded");
   }
   if (band === "13-17") {
-    const ex = single(values, "experienced");
-    if (ex === "Худал цуурхал, гүтгэлэгт өртөх") ids.add("rumors");
-    if (ex === "Чат, группээс зориуд хасагдах") ids.add("excluded");
-    if (ex === "Гадаад төрхөөрөө доромжлуулах") ids.add("insults");
+    const ex = selected(values, "experienced");
+    if (ex.includes("Худал цуурхал, гүтгэлэгт өртөх")) ids.add("rumors");
+    if (ex.includes("Чат, группээс зориуд хасагдах")) ids.add("excluded");
+    if (ex.includes("Гадаад төрхөөрөө доромжлуулах")) ids.add("insults");
     if (single(values, "sexualContent").startsWith("Тийм")) ids.add("pressure");
   }
   return [...ids];
