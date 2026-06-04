@@ -1,26 +1,204 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand accent (blue) */
+  --background: #f5f6f8;
+  --foreground: #0f172a;
+  --accent: #2563eb;
+  --accent-bright: #3b82f6;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", system-ui, ui-sans-serif, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", system-ui, ui-sans-serif, "Segoe UI", sans-serif;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Light page with a faint grid + warm orange glow — keeps the terminal grid motif on white */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 50% -5%, rgba(244, 80, 42, 0.08), transparent 34rem),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, #ffffff 0%, #f5f6f8 55%, #eef0f4 100%);
+  background-size: auto, 92px 92px, 92px 92px, auto;
+}
+
+button,
+select,
+textarea,
+input {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.22);
+  color: #0f172a;
+}
+
+/* ── Scroll-reveal animations ── */
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal[data-reveal="up"] {
+  transform: translateY(34px);
+}
+.reveal[data-reveal="left"] {
+  transform: translateX(-34px);
+}
+.reveal[data-reveal="right"] {
+  transform: translateX(34px);
+}
+.reveal[data-reveal="scale"] {
+  transform: scale(0.94);
+}
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero орж ирэх анимэйшн (нүүр) */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Зөөлөн хөвөх (orb, чимэглэл) */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-22px);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+
+/* Хөдөлгөөнт linear-gradient бөөрөнхий дүрс (hero) */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.hero-orb {
+  background: linear-gradient(
+    120deg,
+    #2563eb 0%,
+    #60a5fa 25%,
+    #93c5fd 50%,
+    #3b82f6 75%,
+    #2563eb 100%
+  );
+  background-size: 300% 300%;
+  animation:
+    gradient-shift 9s ease-in-out infinite,
+    float-slow 11s ease-in-out infinite;
+}
+
+/* Хэлбэрээ хувиргадаг (morph) урсах gradient blob */
+@keyframes blob-morph {
+  0%,
+  100% {
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  }
+  33% {
+    border-radius: 62% 38% 41% 59% / 56% 63% 37% 44%;
+  }
+  66% {
+    border-radius: 38% 62% 56% 44% / 63% 41% 59% 37%;
+  }
+}
+.hero-blob {
+  background: linear-gradient(
+    120deg,
+    #1d4ed8 0%,
+    #3b82f6 30%,
+    #60a5fa 55%,
+    #93c5fd 75%,
+    #2563eb 100%
+  );
+  background-size: 300% 300%;
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  animation:
+    gradient-shift 10s ease-in-out infinite,
+    blob-morph 14s ease-in-out infinite,
+    float-slow 12s ease-in-out infinite;
+}
+
+/* Үсэг доороос дээш эргэлдэн гарч ирэх */
+@keyframes letter-roll {
+  from {
+    opacity: 0;
+    transform: perspective(420px) translateY(0.55em) rotateX(-92deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(420px) translateY(0) rotateX(0);
+  }
+}
+.roll-letter {
+  display: inline-block;
+  transform-origin: bottom center;
+  opacity: 0;
+  transform: perspective(420px) translateY(0.55em) rotateX(-92deg);
+}
+.roll-letter[data-play="true"] {
+  animation-name: letter-roll;
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.2, 0.75, 0.25, 1);
+  animation-fill-mode: forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .animate-fade-up,
+  .animate-float-slow,
+  .hero-orb,
+  .hero-blob,
+  .roll-letter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
