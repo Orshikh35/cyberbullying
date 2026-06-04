@@ -86,12 +86,12 @@ export default function Home() {
             <p className="animate-fade-up mb-5 font-mono text-[0.72rem] font-bold uppercase tracking-[0.24em] text-accent">
               Цахим дээрэлхэлтийн эсрэг хамтдаа
             </p>
-            <h1 className="animate-fade-up font-display max-w-3xl text-4xl font-medium italic leading-[1.05] tracking-[-0.01em] text-slate-900 [animation-delay:0.1s] sm:text-7xl lg:text-[5.5rem]">
+            <h1 className="animate-fade-up font-display max-w-3xl text-2xl font-medium italic leading-[1.1] tracking-[-0.01em] text-slate-900 [animation-delay:0.1s] sm:text-4xl lg:text-5xl">
               Цахим орчны дээрэлхэлтээс
               <br />
               <span className="text-accent">урьдчилан сэргийлцгээе</span>
             </h1>
-            <p className="animate-fade-up mt-6 max-w-xl text-base leading-7 text-slate-600 [animation-delay:0.2s] sm:text-lg">
+            <p className="animate-fade-up mt-5 max-w-xl text-sm leading-6 text-slate-600 [animation-delay:0.2s] sm:text-base">
               Хүүхэд бүр цахим орчинд аюулгүй, хүндлэлтэй байх эрхтэй. Нэргүй судалгаа
               өгч, өөрийн нөхцөлийг бусадтай харьцуулан ойлгож, дараагийн алхмаа мэд.
             </p>
