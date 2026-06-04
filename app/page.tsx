@@ -65,7 +65,7 @@ export default function Home() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="relative grid min-h-[3.25rem] min-w-0 place-items-center border border-slate-200 bg-white/70 px-3 text-[0.7rem] font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 sm:min-w-[5.5rem] sm:px-4"
+                  className="relative grid min-h-[2.6rem] min-w-0 place-items-center border border-slate-200 bg-white/70 px-2 text-[0.62rem] font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 sm:min-h-[3.25rem] sm:min-w-[5.5rem] sm:px-4 sm:text-[0.7rem]"
                 >
                   <span className="absolute right-1.5 top-1.5 h-1 w-1 rounded-full bg-slate-400" />
                   {item.label}
@@ -73,7 +73,7 @@ export default function Home() {
               ))}
               <Link
                 href="/assessment"
-                className="relative col-span-3 grid min-h-[3rem] place-items-center bg-accent px-5 text-[0.7rem] font-bold text-white transition hover:bg-accent-bright sm:col-auto sm:min-h-[3.25rem] sm:min-w-[8.5rem]"
+                className="relative grid min-h-[2.6rem] place-items-center bg-accent px-2 text-center text-[0.62rem] font-bold leading-tight text-white transition hover:bg-accent-bright sm:col-auto sm:min-h-[3.25rem] sm:min-w-[8.5rem] sm:px-5 sm:text-[0.7rem]"
               >
                 <span className="absolute right-1.5 top-1.5 h-1 w-1 rounded-full bg-white" />
                 Судалгаа өгөх
