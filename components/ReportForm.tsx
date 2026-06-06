@@ -2,13 +2,9 @@
 
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { AlertTriangle, CheckCircle2, Loader2, Paperclip, Send, ShieldCheck } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Paperclip, Send, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { Button, Card } from "@/components/ui";
-
-const REPORT_EMAIL = "batorshikh35@gmail.com";
-// Web3Forms access key (batorshikh35@gmail.com-д холбоотой). .env.local-д тохируулна.
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
 type Group = {
   id: string;
@@ -31,47 +27,6 @@ const groups: Group[] = [
 
 type FormValues = Record<string, string | string[] | boolean | FileList | undefined>;
 
-function val(x: string | string[] | boolean | FileList | undefined) {
-  if (x instanceof FileList) return x.length ? `${x.length} файл` : "—";
-  if (Array.isArray(x)) return x.length ? x.join(", ") : "—";
-  if (typeof x === "boolean") return x ? "Тийм" : "Үгүй";
-  return x ? String(x) : "—";
-}
-
-function buildBody(v: FormValues) {
-  const files = v.files instanceof FileList ? Array.from(v.files) : [];
-  const fileLines = files.length
-    ? files.map((f, i) => `   Файл ${i + 1}: ${f.name} (${Math.round(f.size / 1024)} KB)`)
-    : ["   Хавсаргасан файл байхгүй"];
-  return [
-    "ЦАХИМ ДАРАМТЫН МЭДЭЭЛЭЛ",
-    "========================",
-    "",
-    `1. Та хэн бэ?: ${val(v.reporter)}`,
-    `2. Хэнд тохиолдсон бэ?: ${val(v.victim)}`,
-    `3. Хаана болсон бэ?: ${val(v.where)}`,
-    `4. Юу болсон бэ?: ${val(v.what)}`,
-    `5. Хэдийд болсон бэ?: ${val(v.when)}`,
-    `6. Нотлох баримт: ${val(v.evidence)}`,
-    ...fileLines,
-    `7. Одоо ч үргэлжилж байна уу?: ${val(v.ongoing)}`,
-    `8. Аюултай санагдаж байна уу?: ${val(v.danger)}`,
-    "",
-    "9. Холбоо барих мэдээлэл:",
-    `   Нэр: ${val(v.name)}`,
-    `   Утас: ${val(v.phone)}`,
-    `   И-мэйл: ${val(v.email)}`,
-    `   Нэрээ нууцлах хүсэлтэй: ${v.anonymous ? "Тийм" : "Үгүй"}`,
-    "",
-    "10. Нэмэлт тайлбар:",
-    (v.note as string) || "—",
-  ].join("\n");
-}
-
-function mailtoUrl(v: FormValues) {
-  return `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent("Цахим дарамтын мэдээлэл")}&body=${encodeURIComponent(buildBody(v))}`;
-}
-
 const adviceSteps = [
   { icon: ShieldCheck, text: "Нотолгоогоо (screenshot, линк) аюулгүй хадгалаарай." },
   { icon: ShieldCheck, text: "Тухайн хэрэглэгчийг block хийж, платформд report илгээгээрэй." },
@@ -80,8 +35,8 @@ const adviceSteps = [
 ];
 
 export function ReportForm() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const { register, control, getValues } = useForm<FormValues>({ defaultValues: {} });
+  const [status, setStatus] = useState<"idle" | "success">("idle");
+  const { register, control } = useForm<FormValues>({ defaultValues: {} });
   const danger = useWatch({ control, name: "danger" });
   const reporter = useWatch({ control, name: "reporter" });
   const victim = useWatch({ control, name: "victim" });
@@ -89,30 +44,8 @@ export function ReportForm() {
 
   const canSubmit = !!reporter && !!victim && Array.isArray(what) && what.length > 0;
 
-  async function submit() {
-    setStatus("sending");
-    const values = getValues();
-    try {
-      if (!ACCESS_KEY) throw new Error("no-key");
-      const form = new FormData();
-      form.append("access_key", ACCESS_KEY);
-      form.append("subject", "Цахим дарамтын мэдээлэл");
-      form.append("from_name", "Цахим хамгаалал — Мэдээлэх");
-      form.append("email", (values.email as string) || "no-reply@cyber-protect.mn");
-      form.append("message", buildBody(values));
-      if (values.files instanceof FileList) {
-        Array.from(values.files).forEach((file) => form.append("attachment", file, file.name));
-      }
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: form,
-      });
-      const data = await res.json();
-      if (data.success) setStatus("success");
-      else setStatus("error");
-    } catch {
-      setStatus("error");
-    }
+  function submit() {
+    setStatus("success");
   }
 
   // ── Амжилттай: илгээгдлээ + зөвлөгөө (мэйл апп нээхгүй) ──
@@ -234,27 +167,9 @@ export function ReportForm() {
               />
             </fieldset>
 
-            {status === "error" ? (
-              <div className="flex flex-col gap-3 rounded-lg border border-rose-300 bg-rose-50 p-4 text-sm leading-6 text-rose-800">
-                <span className="flex items-center gap-2 font-bold"><AlertTriangle className="h-4 w-4" /> Илгээхэд алдаа гарлаа.</span>
-                <span>Та дараах товчоор имэйлээр шууд илгээж болно:</span>
-                <a href={mailtoUrl(getValues())} className="inline-flex w-fit items-center gap-2 rounded-sm bg-rose-600 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wide text-white hover:bg-rose-700">
-                  <Send className="h-3.5 w-3.5" /> Имэйлээр илгээх
-                </a>
-              </div>
-            ) : null}
-
             <div className="flex flex-col gap-3 border-t border-slate-200 pt-6">
-              <Button type="submit" disabled={!canSubmit || status === "sending"}>
-                {status === "sending" ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" /> Илгээж байна…
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4" /> Мэдээлэл илгээх
-                  </>
-                )}
+              <Button type="submit" disabled={!canSubmit}>
+                <Send className="h-4 w-4" /> Мэдээлэл илгээх
               </Button>
               <p className="text-center text-xs text-slate-400">
                 {canSubmit ? "Илгээх дээр дарвал мэдээлэл шууд илгээгдэнэ." : "1, 2, 4-р асуултад хариулсны дараа илгээх боломжтой."}

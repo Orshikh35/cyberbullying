@@ -131,7 +131,7 @@ export function MediaSection() {
                   key={reel.id}
                   className="overflow-hidden rounded-lg border border-slate-200 bg-slate-900 transition hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-md"
                 >
-                  <div className="relative w-full bg-black" style={{ aspectRatio: "9 / 16" }}>
+                  <div className="relative w-full bg-black" style={{ aspectRatio: "16 / 9" }}>
                     <iframe
                       src={reelEmbedUrl(reel.id)}
                       title={reel.title}

@@ -86,7 +86,7 @@ export default function Home() {
             <p className="animate-fade-up mb-5 font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-accent">
               Цахим дээрэлхэлтийн эсрэг хамтдаа
             </p>
-            <h1 className="animate-fade-up font-display max-w-3xl text-2xl font-medium italic leading-[1.15] tracking-[-0.01em] text-slate-900 [animation-delay:0.1s] sm:text-4xl lg:text-5xl">
+            <h1 className="animate-fade-up font-sans max-w-3xl text-2xl font-semibold leading-[1.15] tracking-[-0.02em] text-slate-900 [animation-delay:0.1s] sm:text-4xl lg:text-5xl">
               Цахим орчны дээрэлхэлтээс
               <br />
               <span className="text-accent">урьдчилан сэргийлцгээе</span>
