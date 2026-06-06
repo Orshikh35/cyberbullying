@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Үсэг бүр доороос дээш эргэлдэн (flip-up) дараалан гарч ирэх анимэйшн.
+ * Үсэг бүр зүүн талаас blur-тэйгээр урсан дараалан гарч ирэх анимэйшн.
  * Scroll-д орж ирэхэд асна, prefers-reduced-motion-г хүндэтгэнэ.
  */
 export function ScrambleText({

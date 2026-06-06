@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { AlertTriangle, CheckCircle2, Loader2, Send, ShieldCheck } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Loader2, Paperclip, Send, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { Button, Card } from "@/components/ui";
 
@@ -29,15 +29,20 @@ const groups: Group[] = [
   { id: "danger", q: "8. Танд эсвэл тухайн хүнд аюултай санагдаж байна уу?", type: "radio", options: ["Тийм", "Үгүй"] },
 ];
 
-type FormValues = Record<string, string | string[] | boolean | undefined>;
+type FormValues = Record<string, string | string[] | boolean | FileList | undefined>;
 
-function val(x: string | string[] | boolean | undefined) {
+function val(x: string | string[] | boolean | FileList | undefined) {
+  if (x instanceof FileList) return x.length ? `${x.length} файл` : "—";
   if (Array.isArray(x)) return x.length ? x.join(", ") : "—";
   if (typeof x === "boolean") return x ? "Тийм" : "Үгүй";
   return x ? String(x) : "—";
 }
 
 function buildBody(v: FormValues) {
+  const files = v.files instanceof FileList ? Array.from(v.files) : [];
+  const fileLines = files.length
+    ? files.map((f, i) => `   Файл ${i + 1}: ${f.name} (${Math.round(f.size / 1024)} KB)`)
+    : ["   Хавсаргасан файл байхгүй"];
   return [
     "ЦАХИМ ДАРАМТЫН МЭДЭЭЛЭЛ",
     "========================",
@@ -48,6 +53,7 @@ function buildBody(v: FormValues) {
     `4. Юу болсон бэ?: ${val(v.what)}`,
     `5. Хэдийд болсон бэ?: ${val(v.when)}`,
     `6. Нотлох баримт: ${val(v.evidence)}`,
+    ...fileLines,
     `7. Одоо ч үргэлжилж байна уу?: ${val(v.ongoing)}`,
     `8. Аюултай санагдаж байна уу?: ${val(v.danger)}`,
     "",
@@ -88,16 +94,18 @@ export function ReportForm() {
     const values = getValues();
     try {
       if (!ACCESS_KEY) throw new Error("no-key");
+      const form = new FormData();
+      form.append("access_key", ACCESS_KEY);
+      form.append("subject", "Цахим дарамтын мэдээлэл");
+      form.append("from_name", "Цахим хамгаалал — Мэдээлэх");
+      form.append("email", (values.email as string) || "no-reply@cyber-protect.mn");
+      form.append("message", buildBody(values));
+      if (values.files instanceof FileList) {
+        Array.from(values.files).forEach((file) => form.append("attachment", file, file.name));
+      }
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: ACCESS_KEY,
-          subject: "Цахим дарамтын мэдээлэл",
-          from_name: "Цахим хамгаалал — Мэдээлэх",
-          email: (values.email as string) || "no-reply@cyber-protect.mn",
-          message: buildBody(values),
-        }),
+        body: form,
       });
       const data = await res.json();
       if (data.success) setStatus("success");
@@ -179,6 +187,25 @@ export function ReportForm() {
                   <div className="flex gap-3 rounded-lg border border-rose-300 bg-rose-50 p-4 text-sm leading-6 text-rose-800">
                     <AlertTriangle className="h-5 w-5 shrink-0 text-rose-500" />
                     <span>Яаралтай тусламж хэрэгтэй бол холбогдох байгууллага (цагдаа 102, хүүхдийн тусламжийн утас 108)-д нэн даруй хандана уу.</span>
+                  </div>
+                ) : null}
+
+                {group.id === "evidence" ? (
+                  <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4">
+                    <label className="flex cursor-pointer flex-col gap-2">
+                      <span className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                        <Paperclip className="h-4 w-4 text-accent" aria-hidden />
+                        Нотлох баримт хавсаргах (заавал биш)
+                      </span>
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*,video/*,.pdf"
+                        className="block w-full text-sm text-slate-600 file:mr-3 file:rounded-sm file:border-0 file:bg-accent/15 file:px-4 file:py-2 file:font-mono file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-accent hover:file:bg-accent/25"
+                        {...register("files")}
+                      />
+                    </label>
+                    <p className="mt-2 text-xs text-slate-500">Screenshot, зураг, видео, PDF — нийт 10 MB хүртэл.</p>
                   </div>
                 ) : null}
               </fieldset>

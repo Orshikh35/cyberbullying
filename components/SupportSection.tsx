@@ -46,6 +46,8 @@ const infoLinks = [
   { icon: FileText, label: "Тохиолдлоо мэдээлэх", desc: "Нэргүйгээр мэдээлэл өгөх", href: "/report", external: false },
   { icon: MessageCircleHeart, label: "Зөвлөгөө унших", desc: "Алхам алхмаар юу хийх вэ", href: "/advice", external: false },
   { icon: Globe, label: "ekids.mn", desc: "Цахим аюулгүй байдлын сайт", href: "https://ekids.mn", external: true },
+  { icon: ShieldCheck, label: "help.da.gov.mn", desc: "Албан ёсны тусламжийн портал", href: "https://help.da.gov.mn", external: true },
+  { icon: PhoneCall, label: "113.mn", desc: "Кибер гэмт хэрэг мэдээлэх", href: "https://113.mn", external: true },
 ];
 
 export function SupportSection() {

@@ -1,5 +1,6 @@
 import { BookOpenText } from "lucide-react";
 import { Changelog, type ChangelogEntry } from "@/components/Changelog";
+import { MediaSection } from "@/components/MediaSection";
 import { PageShell } from "@/components/PageShell";
 import { newsItems } from "@/data/news";
 
@@ -72,6 +73,7 @@ export default function InfoPage() {
       icon={BookOpenText}
     >
       <Changelog eyebrow="Төрөл" heading="Цахим дээрэлхэлт ямар хэлбэрээр илэрдэг вэ?" entries={typeEntries} />
+      <MediaSection />
       <Changelog eyebrow="Мэдээ" heading="Сүүлийн зөвлөмж, нийтлэл" entries={newsEntries} />
     </PageShell>
   );

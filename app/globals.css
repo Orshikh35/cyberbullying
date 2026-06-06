@@ -165,27 +165,30 @@ input {
     float-slow 12s ease-in-out infinite;
 }
 
-/* Үсэг доороос дээш эргэлдэн гарч ирэх */
+/* Үсэг зүүн талаас урсан гарч ирэх */
 @keyframes letter-roll {
   from {
     opacity: 0;
-    transform: perspective(420px) translateY(0.55em) rotateX(-92deg);
+    transform: translateX(-0.7em);
+    filter: blur(4px);
   }
   to {
     opacity: 1;
-    transform: perspective(420px) translateY(0) rotateX(0);
+    transform: translateX(0);
+    filter: blur(0);
   }
 }
 .roll-letter {
   display: inline-block;
-  transform-origin: bottom center;
   opacity: 0;
-  transform: perspective(420px) translateY(0.55em) rotateX(-92deg);
+  transform: translateX(-0.7em);
+  filter: blur(4px);
+  will-change: transform, opacity, filter;
 }
 .roll-letter[data-play="true"] {
   animation-name: letter-roll;
-  animation-duration: 0.55s;
-  animation-timing-function: cubic-bezier(0.2, 0.75, 0.25, 1);
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.22, 0.8, 0.2, 1);
   animation-fill-mode: forwards;
 }
 
