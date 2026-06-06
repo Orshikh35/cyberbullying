@@ -1,6 +1,7 @@
 import { BarChart3 } from "lucide-react";
 import { DashboardCharts } from "@/components/DashboardCharts";
 import { GlobalDataSection } from "@/components/GlobalDataSection";
+import { InternationalDataSection } from "@/components/InternationalDataSection";
 import { PageShell } from "@/components/PageShell";
 
 export default function DashboardPage() {
@@ -12,6 +13,7 @@ export default function DashboardPage() {
       icon={BarChart3}
     >
       <GlobalDataSection />
+      <InternationalDataSection />
       <DashboardCharts />
     </PageShell>
   );
